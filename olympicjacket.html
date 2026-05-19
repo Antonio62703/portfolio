@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="portfav.svg" type="image/svg+xml">
+  <title>2024 Paris Olympic Jacket — Antonio Chen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    a, span, p { text-decoration: none; }
+    :root { --white: #ffffff; --black: #111111; --gray: #999999; --light-gray: #e8e8e8; }
+
+    html, body {
+      background: var(--white);
+      color: var(--black);
+      font-family: 'DM Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── SITE NAME ── */
+    .site-name {
+      position: fixed;
+      top: 32px;
+      left: 32px;
+      z-index: 100;
+      font-size: 11pt;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      line-height: 1.2;
+      color: var(--black);
+      text-decoration: none;
+    }
+
+    /* ── NAV ── */
+    .site-nav {
+      position: fixed;
+      top: 120px;
+      left: 32px;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .nav-link {
+      font-size: 11pt;
+      font-weight: 700;
+      color: var(--black);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-thickness: 1px;
+      line-height: 1.2;
+      transition: opacity 0.2s ease;
+      display: block;
+    }
+    .nav-link:hover { opacity: 0.5; }
+
+    /* ── LANG TOGGLE ── */
+    .lang-toggle {
+      position: fixed;
+      top: 32px;
+      right: 32px;
+      z-index: 200;
+      font-size: 11pt;
+      font-weight: 700;
+      color: var(--black);
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-thickness: 1px;
+      transition: opacity 0.2s ease;
+      background: none;
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+      letter-spacing: 0.01em;
+    }
+    .lang-toggle:hover { opacity: 0.5; }
+
+    /* ── CLOCK ── */
+    .clock {
+      position: fixed;
+      bottom: 24px;
+      right: 32px;
+      z-index: 100;
+      font-size: 10pt;
+      font-weight: 700;
+      color: var(--black);
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    /* ── MAIN CONTENT ── */
+    main {
+      padding-top: 0;
+    }
+
+    /* ── HERO IMAGES (full-screen) ── */
+    .hero-img {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 60px 0;
+    }
+
+    .hero-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* ── PROJECT INFO — below nav links ── */
+    .project-info {
+      position: fixed;
+      top: 260px;
+      left: 32px;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      max-width: 220px;
+    }
+    .project-info .work-title {
+      font-size: 11pt;
+      font-weight: 700;
+      color: var(--black);
+      line-height: 1.2;
+    }
+    .project-info .work-medium {
+      font-size: 11pt;
+      font-weight: 700;
+      color: var(--gray);
+      line-height: 1.2;
+    }
+    .project-info .work-year {
+      font-size: 11pt;
+      font-weight: 700;
+      color: var(--gray);
+      line-height: 1.2;
+    }
+
+    /* ── CENTERED DESCRIPTION ── */
+    .page-desc {
+      display: block;
+      max-width: 660px;
+      margin: 120px auto 0;
+      padding: 0 32px;
+      font-size: 8.5pt;
+      font-weight: 700;
+      color: var(--gray);
+      line-height: 1.6;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<button class="lang-toggle" id="langToggle">中文</button>
+
+<a href="index.html" class="site-name">Antonio Chen</a>
+
+<nav class="site-nav">
+  <a href="index.html"   class="nav-link" data-en="Info↗"    data-zh="關於↗">Info↗</a>
+  <a href="works.html"   class="nav-link" data-en="Works↗"   data-zh="作品↗">Works↗</a>
+  <a href="archive.html" class="nav-link" data-en="Archive↗" data-zh="典藏↗">Archive↗</a>
+</nav>
+
+<div class="project-info">
+  <div class="work-title">2024 Paris Olympic Jacket</div>
+  <div class="work-medium" data-en="Apparel" data-zh="服裝">Apparel</div>
+  <div class="work-year">2025</div>
+</div>
+
+<div class="clock" id="clock">00:00:00</div>
+
+<div class="page-desc">Jacket + bag made from 2024 Paris Olympic athletes quilt.</div>
+
+<main>
+
+  <!-- HERO 1 — 60vh to hint at scrolling -->
+  <div class="hero-img" style="height: 60vh; padding-top: 4vh; align-items: flex-start; position: relative; z-index: 2;">
+    <img src="jacket1.png" alt="Olympic Jacket 1" style="height: 100%; width: 100%; object-fit: contain;" />
+  </div>
+
+  <!-- HERO 2 — slight overlap like Taiwan -->
+  <div class="hero-img" style="margin-top: -8vh; position: relative; z-index: 1;">
+    <img src="jacket8.jpg" alt="Olympic Jacket 8" />
+  </div>
+
+  <!-- HERO 3 -->
+  <div class="hero-img">
+    <img src="jacket3.png" alt="Olympic Jacket 3" />
+  </div>
+
+  <!-- HERO 4 -->
+  <div class="hero-img">
+    <img src="jacket4.jpg" alt="Olympic Jacket 4" />
+  </div>
+
+  <!-- HERO 5 -->
+  <div class="hero-img">
+    <img src="jacket5.jpg" alt="Olympic Jacket 5" />
+  </div>
+
+  <!-- HERO 6 -->
+  <div class="hero-img">
+    <img src="jacket6.jpg" alt="Olympic Jacket 6" />
+  </div>
+
+  <!-- HERO 7 -->
+  <div class="hero-img">
+    <img src="jacket2.png" alt="Olympic Jacket 2" />
+  </div>
+
+</main>
+
+<script>
+  // Clock
+  function updateClock() {
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2, '0');
+    const m = String(now.getMinutes()).padStart(2, '0');
+    const s = String(now.getSeconds()).padStart(2, '0');
+    document.getElementById('clock').textContent = h + ':' + m + ':' + s;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // Language toggle
+  const toggle = document.getElementById('langToggle');
+  let isZh = false;
+  toggle.addEventListener('click', () => {
+    isZh = !isZh;
+    toggle.textContent = isZh ? 'EN' : '中文';
+    document.querySelectorAll('[data-en]').forEach(el => {
+      el.innerHTML = isZh ? el.dataset.zh : el.dataset.en;
+    });
+  });
+</script>
+
+</body>
+</html>

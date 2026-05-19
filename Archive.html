@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="portfav.svg" type="image/svg+xml">
+  <title>Archive — Antonio Chen</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    a, span, p { text-decoration: none; }
+    :root { --white: #ffffff; --black: #111111; --gray: #999999; --light-gray: #e8e8e8; }
+
+    html, body {
+      background: var(--white);
+      color: var(--black);
+      font-family: 'ABCMonumentGrotesk', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── SITE NAME ── */
+    .site-name {
+      position: fixed;
+      top: 32px;
+      left: 32px;
+      z-index: 100;
+      font-size: 11pt;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      line-height: 1.2;
+      color: var(--black);
+      text-decoration: none;
+    }
+
+    /* ── NAV ── */
+    .site-nav {
+      position: fixed;
+      top: 120px;
+      left: 32px;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .nav-link {
+      font-size: 11pt;
+      font-weight: 500;
+      color: var(--black);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-thickness: 1px;
+      line-height: 1.2;
+      transition: opacity 0.2s ease;
+      display: block;
+    }
+    .nav-link:hover { opacity: 0.5; }
+
+    .site-nav--sub {
+      left: 160px;
+    }
+
+    .nav-link--gray {
+      color: var(--black);
+      text-decoration-color: var(--black);
+    }
+
+    /* ── LANG TOGGLE ── */
+    .lang-toggle {
+      position: fixed;
+      top: 32px;
+      right: 32px;
+      z-index: 200;
+      font-size: 11pt;
+      font-weight: 500;
+      color: var(--black);
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-thickness: 1px;
+      transition: opacity 0.2s ease;
+      background: none;
+      border: none;
+      font-family: 'ABCMonumentGrotesk', sans-serif;
+      letter-spacing: 0.01em;
+    }
+    .lang-toggle:hover { opacity: 0.5; }
+
+    /* ── CLOCK ── */
+    .clock {
+      position: fixed;
+      bottom: 24px;
+      right: 32px;
+      z-index: 100;
+      font-size: 10pt;
+      font-weight: 500;
+      color: var(--black);
+      font-family: 'ABCMonumentGrotesk', sans-serif;
+    }
+
+    /* ── MAIN CONTENT ── */
+    main {
+      margin-left: 160px;
+      padding: 80px 48px 80px 32px;
+    }
+
+    /* ── IMAGE GRID ── */
+    .image-grid {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .image-grid.visible {
+      display: flex;
+    }
+    .image-grid img {
+      width: 600px;
+      height: auto;
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      main {
+        margin-left: 0;
+        padding: 120px 24px 80px;
+      }
+      .image-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+  <style>
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-Light-Trial.otf') format('opentype');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-LightItalic-Trial.otf') format('opentype');
+      font-weight: 400;
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-Bold-Trial.otf') format('opentype');
+      font-weight: 700;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-BoldItalic-Trial.otf') format('opentype');
+      font-weight: 700;
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-Thin-Trial.otf') format('opentype');
+      font-weight: 300;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-ThinItalic-Trial.otf') format('opentype');
+      font-weight: 300;
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-Medium-Trial.otf') format('opentype');
+      font-weight: 500;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-MediumItalic-Trial.otf') format('opentype');
+      font-weight: 500;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+<a href="index.html" class="site-name">Antonio Chen</a>
+
+<nav class="site-nav">
+  <a href="index.html"   class="nav-link">Info↗</a>
+  <a href="works.html"   class="nav-link">Works↗</a>
+  <a href="archive.html" class="nav-link">Archive↗</a>
+</nav>
+
+<nav class="site-nav site-nav--sub">
+  <a href="#" class="nav-link nav-link--gray" id="dailyLink">Daily training↗</a>
+  <a href="#" class="nav-link nav-link--gray" id="olyLink">2024 Paris OLY↗</a>
+</nav>
+
+<div class="clock" id="clock">00:00:00</div>
+
+<main>
+  <div class="image-grid" id="dailyGrid">
+    <div style="display:flex; flex-direction:column; width:600px;">
+      <span style="font-size:10pt; font-weight:500; color:var(--black); margin-bottom:6px;">Photos → Zhou Chuan</span>
+      <img src="d1.jpg" alt="d1">
+    </div>
+    <img src="d2.jpg" alt="d2">
+    <img src="d3.jpg" alt="d3">
+    <img src="d4.jpg" alt="d4">
+    <img src="d5.jpg" alt="d5">
+    <img src="d6.jpg" alt="d6">
+    <img src="d7.jpg" alt="d7">
+    <img src="d8.jpg" alt="d8">
+    <img src="d9.jpg" alt="d9">
+    <img src="d10.jpg" alt="d10">
+    <img src="d11.jpg" alt="d11">
+    <img src="d12.jpg" alt="d12">
+    <img src="d13.jpg" alt="d13">
+    <img src="d14.jpg" alt="d14">
+    <img src="d15.jpg" alt="d15">
+  </div>
+  <div class="image-grid" id="olyGrid">
+    <div style="display:flex; flex-direction:column; width:600px;">
+      <span style="font-size:10pt; font-weight:500; color:var(--black); margin-bottom:6px;">Photos → me</span>
+      <img src="o1.jpg" alt="o1">
+    </div>
+    <img src="o2.jpg" alt="o2">
+    <img src="o3.jpg" alt="o3">
+    <img src="o4.jpg" alt="o4">
+    <img src="o5.jpg" alt="o5">
+    <img src="o6.jpg" alt="o6">
+    <img src="o7.jpg" alt="o7">
+    <img src="o8.jpg" alt="o8">
+    <img src="o9.jpg" alt="o9">
+    <img src="o10.jpg" alt="o10">
+    <img src="o11.jpg" alt="o11">
+    <img src="o12.jpg" alt="o12">
+    <img src="o13.jpg" alt="o13">
+    <img src="o14.jpg" alt="o14">
+    <img src="o15.jpg" alt="o15">
+    <img src="o16.jpg" alt="o16">
+    <img src="o17.jpg" alt="o17">
+    <img src="o18.jpg" alt="o18">
+    <img src="o19.jpg" alt="o19">
+    <img src="o20.jpg" alt="o20">
+    <img src="o21.jpg" alt="o21">
+    <img src="o22.jpg" alt="o22">
+    <img src="o23.jpg" alt="o23">
+    <img src="o24.jpg" alt="o24">
+    <img src="o25.jpg" alt="o25">
+  </div>
+</main>
+
+<script>
+  const dailyLink = document.getElementById('dailyLink');
+  const dailyGrid = document.getElementById('dailyGrid');
+  const olyLink = document.getElementById('olyLink');
+  const olyGrid = document.getElementById('olyGrid');
+
+  function activate(link, grid) {
+    [dailyGrid, olyGrid].forEach(g => g.classList.remove('visible'));
+    grid.classList.add('visible');
+    window.scrollTo(0, 0);
+  }
+
+  dailyLink.addEventListener('click', (e) => { e.preventDefault(); activate(dailyLink, dailyGrid); });
+  olyLink.addEventListener('click', (e) => { e.preventDefault(); activate(olyLink, olyGrid); });
+
+  // Clock
+  function updateClock() {
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2, '0');
+    const m = String(now.getMinutes()).padStart(2, '0');
+    const s = String(now.getSeconds()).padStart(2, '0');
+    document.getElementById('clock').textContent = h + ':' + m + ':' + s;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // Language toggle
+  const toggle = document.getElementById('langToggle');
+  if (toggle) {
+    let isZh = false;
+    toggle.addEventListener('click', () => {
+      isZh = !isZh;
+      toggle.textContent = isZh ? 'EN' : '中文';
+      document.querySelectorAll('[data-en]').forEach(el => {
+        el.innerHTML = isZh ? el.dataset.zh : el.dataset.en;
+      });
+    });
+  }
+</script>
+
+</body>
+</html>

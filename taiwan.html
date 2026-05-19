@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="portfav.svg" type="image/svg+xml">
+  <title>KÀN — Antonio Chen</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    a, span, p { text-decoration: none; }
+    :root { --white: #ffffff; --black: #111111; --gray: #999999; --light-gray: #e8e8e8; }
+
+    html, body {
+      background: var(--white);
+      color: var(--black);
+      font-family: 'ABCMonumentGrotesk', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── SITE NAME ── */
+    .site-name {
+      position: fixed;
+      top: 32px;
+      left: 32px;
+      z-index: 100;
+      font-size: 11pt;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      line-height: 1.2;
+      color: var(--black);
+      text-decoration: none;
+    }
+
+    /* ── NAV ── */
+    .site-nav {
+      position: fixed;
+      top: 120px;
+      left: 32px;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .nav-link {
+      font-size: 11pt;
+      font-weight: 500;
+      color: var(--black);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-thickness: 1px;
+      line-height: 1.2;
+      transition: opacity 0.2s ease;
+      display: block;
+    }
+    .nav-link:hover { opacity: 0.5; }
+
+    /* ── LANG TOGGLE ── */
+    .lang-toggle {
+      position: fixed;
+      top: 32px;
+      right: 32px;
+      z-index: 200;
+      font-size: 11pt;
+      font-weight: 500;
+      color: var(--black);
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-thickness: 1px;
+      transition: opacity 0.2s ease;
+      background: none;
+      border: none;
+      font-family: 'ABCMonumentGrotesk', sans-serif;
+      letter-spacing: 0.01em;
+    }
+    .lang-toggle:hover { opacity: 0.5; }
+
+    /* ── CLOCK ── */
+    .clock {
+      position: fixed;
+      bottom: 24px;
+      right: 32px;
+      z-index: 100;
+      font-size: 10pt;
+      font-weight: 500;
+      color: var(--black);
+      font-family: 'ABCMonumentGrotesk', sans-serif;
+    }
+
+    /* ── MAIN CONTENT ── */
+    main {
+      padding-top: 0;
+    }
+
+    /* ── HERO IMAGES (full-screen) ── */
+    .hero-img {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* ── GRID SECTION ── */
+    .grid-section {
+      padding: 80px 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .grid-inner {
+      display: grid;
+      grid-template-columns: repeat(3, 340px);
+      gap: 24px;
+    }
+
+    .grid-inner img {
+      width: 340px;
+      height: 340px;
+      object-fit: cover;
+      display: block;
+      transition: opacity 0.25s ease;
+    }
+
+    .grid-inner img:hover {
+      opacity: 0.8;
+    }
+
+    /* ── PROJECT INFO — below nav links ── */
+    .project-info {
+      position: fixed;
+      top: 260px;
+      left: 32px;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      max-width: 220px;
+    }
+    .project-info .work-title {
+      font-size: 11pt;
+      font-weight: 500;
+      color: var(--black);
+      line-height: 1.2;
+    }
+    .project-info .work-medium {
+      font-size: 11pt;
+      font-weight: 400;
+      color: var(--gray);
+      line-height: 1.2;
+    }
+    .project-info .work-year {
+      font-size: 11pt;
+      font-weight: 400;
+      color: var(--gray);
+      line-height: 1.2;
+    }
+    /* ── CENTERED DESCRIPTION ── */
+    .page-desc {
+      display: block;
+      max-width: 660px;
+      margin: 120px auto 0;
+      padding: 0 32px;
+      font-size: 8.5pt;
+      font-weight: 400;
+      color: var(--gray);
+      line-height: 1.6;
+      text-align: left;
+    }
+  </style>
+  <style>
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-Light-Trial.otf') format('opentype');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-LightItalic-Trial.otf') format('opentype');
+      font-weight: 400;
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-Bold-Trial.otf') format('opentype');
+      font-weight: 700;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-BoldItalic-Trial.otf') format('opentype');
+      font-weight: 700;
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-Thin-Trial.otf') format('opentype');
+      font-weight: 300;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-ThinItalic-Trial.otf') format('opentype');
+      font-weight: 300;
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-Medium-Trial.otf') format('opentype');
+      font-weight: 500;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-MediumItalic-Trial.otf') format('opentype');
+      font-weight: 500;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+<button class="lang-toggle" id="langToggle">中文</button>
+
+<a href="index.html" class="site-name">Antonio Chen</a>
+
+<nav class="site-nav">
+  <a href="index.html"   class="nav-link" data-en="Info↗"    data-zh="關於↗">Info↗</a>
+  <a href="works.html"   class="nav-link" data-en="Works↗"   data-zh="作品↗">Works↗</a>
+  <a href="archive.html" class="nav-link" data-en="Archive↗" data-zh="典藏↗">Archive↗</a>
+</nav>
+
+<div class="project-info">
+  <div class="work-title">KÀN</div>
+  <div class="work-medium" data-en="Print" data-zh="印刷">Print</div>
+  <div class="work-year">2024</div>
+</div>
+
+<div class="clock" id="clock">00:00:00</div>
+
+<div class="page-desc">KÀN (台灣人ㄟ招牌) A compact 40-page publication exploring Taiwanese signage through bold color and assertive typography. Documenting signs from Taipei to Tainan, the design embraces high-contrast visuals, expressive layouts, capturing the raw energy of urban streetscapes. It examines the tension between visual chaos and cultural identity, exploring this attention-grabbing and controversially beautiful aesthetic.</div>
+
+<main>
+
+  <!-- HERO 1 — 80% visible to hint at scrolling -->
+  <div class="hero-img" style="height: 60vh; padding-top: 4vh; align-items: flex-start; position: relative; z-index: 2;">
+    <img src="tai1.png" alt="KÀN 1" style="height: 100%; width: 100%; object-fit: contain;" />
+  </div>
+
+  <!-- HERO 2 -->
+  <div class="hero-img" style="margin-top: -8vh; position: relative; z-index: 1;">
+    <img src="tai2.png" alt="KÀN 2" />
+  </div>
+
+  <!-- HERO 3 -->
+  <div class="hero-img">
+    <img src="tai3.png" alt="KÀN 3" />
+  </div>
+
+  <!-- HERO 4 -->
+  <div class="hero-img">
+    <img src="tai4.png" alt="KÀN 4" />
+  </div>
+
+  <!-- GRID — remaining images between Tai4 and back -->
+  <div class="grid-section">
+    <div class="grid-inner">
+      <img src="tai5.png"  alt="KÀN 5" />
+      <img src="tai6.png"  alt="KÀN 6" />
+      <img src="tai7.png"  alt="KÀN 7" />
+      <img src="tai8.png"  alt="KÀN 8" />
+      <img src="tai9.png"  alt="KÀN 9" />
+      <img src="tai10.png" alt="KÀN 10" />
+      <img src="tai11.png" alt="KÀN 11" />
+      <img src="tai12.png" alt="KÀN 12" />
+      <img src="tai13.png" alt="KÀN 13" />
+    </div>
+  </div>
+
+  <!-- HERO — back.png -->
+  <div class="hero-img">
+    <img src="back.png" alt="KÀN back" />
+  </div>
+
+</main>
+
+<script>
+  // Clock
+  function updateClock() {
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2, '0');
+    const m = String(now.getMinutes()).padStart(2, '0');
+    const s = String(now.getSeconds()).padStart(2, '0');
+    document.getElementById('clock').textContent = h + ':' + m + ':' + s;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // Language toggle
+  const toggle = document.getElementById('langToggle');
+  let isZh = false;
+  toggle.addEventListener('click', () => {
+    isZh = !isZh;
+    toggle.textContent = isZh ? 'EN' : '中文';
+    document.querySelectorAll('[data-en]').forEach(el => {
+      el.innerHTML = isZh ? el.dataset.zh : el.dataset.en;
+    });
+  });
+</script>
+
+</body>
+</html>

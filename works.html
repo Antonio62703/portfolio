@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="portfav.svg" type="image/svg+xml">
+  <title>Works — Antonio Chen</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    a, span, p { text-decoration: none; }
+    :root { --white: #ffffff; --black: #111111; --gray: #999999; --light-gray: #e8e8e8; }
+
+    html, body {
+      background: var(--white);
+      color: var(--black);
+      font-family: 'ABCMonumentGrotesk', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      position: relative;
+    }
+
+    /* ── FIXED HEADER ── */
+    .site-name {
+      position: absolute;
+      top: 32px;
+      left: 32px;
+      z-index: 100;
+      font-size: 11pt;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      line-height: 1.2;
+      color: var(--black);
+    }
+
+    .site-nav {
+      position: absolute;
+      top: 120px;
+      left: 32px;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .nav-link {
+      font-size: 11pt;
+      font-weight: 500;
+      color: var(--black);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-thickness: 1px;
+      line-height: 1.2;
+      transition: opacity 0.2s ease;
+      display: block;
+    }
+    .nav-link:hover { opacity: 0.5; }
+
+    .lang-toggle {
+      position: fixed;
+      top: 32px;
+      right: 32px;
+      z-index: 200;
+      font-size: 11pt;
+      font-weight: 500;
+      color: var(--black);
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-thickness: 1px;
+      transition: opacity 0.2s ease;
+      background: none;
+      border: none;
+      font-family: 'ABCMonumentGrotesk', sans-serif;
+      letter-spacing: 0.01em;
+    }
+    .lang-toggle:hover { opacity: 0.5; }
+
+    /* ── WORKS GRID ── */
+    .works-page {
+      padding: 280px 0 120px 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 400px);
+      gap: 60px 40px;
+    }
+
+    .work-card {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .work-card a {
+      display: block;
+      text-decoration: none;
+    }
+
+    .work-thumb {
+      width: 400px;
+      height: 270px;
+      background: var(--light-gray);
+      overflow: hidden;
+      display: block;
+      position: relative;
+      transition: opacity 0.25s ease;
+    }
+    .work-thumb:hover { opacity: 0.75; }
+
+    .work-thumb img,
+    .work-thumb video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* slideshow */
+    .work-thumb.slideshow img {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: none;
+    }
+    .work-thumb.slideshow img.active { opacity: 1; }
+
+    .work-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .work-title {
+      font-size: 11pt;
+      font-weight: 500;
+      color: var(--black);
+      letter-spacing: 0.01em;
+      line-height: 1.2;
+    }
+
+    .work-medium {
+      font-size: 11pt;
+      font-weight: 400;
+      color: var(--gray);
+      line-height: 1.2;
+    }
+
+    .work-year {
+      font-size: 11pt;
+      font-weight: 400;
+      color: var(--gray);
+      line-height: 1.2;
+    }
+
+    /* ── CLOCK ── */
+    .clock {
+      position: fixed;
+      bottom: 24px;
+      right: 32px;
+      z-index: 100;
+      font-size: 10pt;
+      font-weight: 500;
+      color: var(--black);
+      font-family: 'ABCMonumentGrotesk', sans-serif;
+    }
+  </style>
+  <style>
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-Light-Trial.otf') format('opentype');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-LightItalic-Trial.otf') format('opentype');
+      font-weight: 400;
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-Bold-Trial.otf') format('opentype');
+      font-weight: 700;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-BoldItalic-Trial.otf') format('opentype');
+      font-weight: 700;
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-Thin-Trial.otf') format('opentype');
+      font-weight: 300;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-ThinItalic-Trial.otf') format('opentype');
+      font-weight: 300;
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-Medium-Trial.otf') format('opentype');
+      font-weight: 500;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-MediumItalic-Trial.otf') format('opentype');
+      font-weight: 500;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+<button class="lang-toggle" id="langToggle">中文</button>
+
+<a href="index.html" class="site-name" style="text-decoration:none;">Antonio Chen</a>
+
+<nav class="site-nav">
+  <a href="index.html"   class="nav-link" data-en="Info↗"    data-zh="關於↗">Info↗</a>
+  <a href="works.html"   class="nav-link" data-en="Works↗"   data-zh="作品↗">Works↗</a>
+  <a href="archive.html" class="nav-link" data-en="Archive↗" data-zh="典藏↗">Archive↗</a>
+</nav>
+
+<main class="works-page">
+  <div class="works-grid">
+
+    <!-- ROW 1 -->
+
+    <!-- Work 1 -->
+    <div class="work-card">
+      <a href="personal.html">
+        <div class="work-thumb">
+          <video src="work1.mp4" autoplay muted loop playsinline></video>
+        </div>
+      </a>
+      <div class="work-info">
+        <span class="work-title">Personalizing The Impersonal</span>
+        <span class="work-medium" data-en="Web, Installation, Publication" data-zh="網頁、裝置、出版">Web, Installation, Publication</span>
+        <span class="work-year">2025</span>
+      </div>
+    </div>
+
+    <!-- Work 2 -->
+    <div class="work-card">
+      <a href="kt.html">
+        <div class="work-thumb">
+          <video src="work2.mov" autoplay muted loop playsinline></video>
+        </div>
+      </a>
+      <div class="work-info">
+        <span class="work-title">Know Thyself</span>
+        <span class="work-medium" data-en="Branding, Web" data-zh="品牌、網頁">Branding, Web</span>
+        <span class="work-year">2025</span>
+      </div>
+    </div>
+
+    <!-- Work 3 -->
+    <div class="work-card">
+      <a href="interview.html">
+        <div class="work-thumb slideshow" id="interviewSlideshow">
+          <img src="antc.jpg" class="active" />
+          <img src="ant5.png" />
+          <img src="ant2.png" />
+        </div>
+      </a>
+      <div class="work-info">
+        <span class="work-title">Winston Cuevas Interview</span>
+        <span class="work-medium" data-en="Print" data-zh="印刷">Print</span>
+        <span class="work-year">2026</span>
+      </div>
+    </div>
+
+    <!-- ROW 2 -->
+
+    <!-- Work 4 -->
+    <div class="work-card">
+      <a href="prf.html">
+        <div class="work-thumb slideshow" id="prfSlideshow">
+          <img src="prf1.png" class="active" />
+          <img src="prf2.png" />
+          <img src="prf3.png" />
+        </div>
+      </a>
+      <div class="work-info">
+        <span class="work-title">Paris Running Festival</span>
+        <span class="work-medium" data-en="Branding" data-zh="品牌">Branding</span>
+        <span class="work-year">2025</span>
+      </div>
+    </div>
+
+    <!-- Work 5 -->
+    <div class="work-card">
+      <a href="samsung.html">
+        <div class="work-thumb">
+          <img src="samsung.png" alt="Samsung Galaxy Z Fold6 Collaboration" />
+        </div>
+      </a>
+      <div class="work-info">
+        <span class="work-title">Samsung Galaxy Z Fold6 Collaboration</span>
+        <span class="work-medium" data-en="Videography" data-zh="錄像">Videography</span>
+        <span class="work-year">2024</span>
+      </div>
+    </div>
+
+    <!-- Work 6 -->
+    <div class="work-card">
+      <a href="sneaker.html">
+        <div class="work-thumb slideshow" id="sneakersSlideshow">
+          <img src="sneakers.jpg" class="active" />
+          <img src="sneakers2.png" />
+          <img src="sneakers3.png" />
+          <img src="sneakers4.jpg" />
+        </div>
+      </a>
+      <div class="work-info">
+        <span class="work-title">Sneaker Series</span>
+        <span class="work-medium" data-en="Multimedia" data-zh="多媒體">Multimedia</span>
+        <span class="work-year">2023–2024</span>
+      </div>
+    </div>
+
+    <!-- ROW 3 — replace src/href with your actual files -->
+
+    <!-- Work 7 -->
+    <div class="work-card">
+      <a href="taiwan.html">
+        <div class="work-thumb slideshow" id="taiwanSlideshow">
+          <img src="taiwan1.jpg" class="active" />
+          <img src="taiwan2.png" />
+          <img src="taiwan3.png" />
+          <img src="taiwan4.png" />
+        </div>
+      </a>
+      <div class="work-info">
+        <span class="work-title">KÀN</span>
+        <span class="work-medium" data-en="Print" data-zh="印刷">Print</span>
+        <span class="work-year">2024</span>
+      </div>
+    </div>
+
+    <!-- Work 8 -->
+    <div class="work-card">
+      <a href="https://antonio62703.github.io/CatchEmAllType/?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGnRRJnrdnrWGRCJYosWwG7TI0dpCtg_C9xa8XAnElhFCExw-jWFya_2I-jAvI_aem_OgFLAQN9DksoW3QfbK8rhw" target="_blank">
+        <div class="work-thumb">
+          <video src="pokemon.mov" autoplay muted loop playsinline></video>
+        </div>
+      </a>
+      <div class="work-info">
+        <span class="work-title">Pokemon Typeface</span>
+        <span class="work-medium" data-en="Type, Digital" data-zh="字型、數位">Type, Digital</span>
+        <span class="work-year">2025</span>
+      </div>
+    </div>
+
+    <!-- Work 9 -->
+    <div class="work-card">
+      <a href="olympicjacket.html">
+        <div class="work-thumb">
+          <img src="jacket1.png" />
+        </div>
+      </a>
+      <div class="work-info">
+        <span class="work-title">2024 Paris Olympic Jacket</span>
+        <span class="work-medium" data-en="Apparel" data-zh="服裝">Apparel</span>
+        <span class="work-year">2025</span>
+      </div>
+    </div>
+
+    <!-- Work 10 -->
+    <div class="work-card">
+      <a href="kayak.html">
+        <div class="work-thumb slideshow" id="kayakSlideshow">
+          <img src="kayakwork1.png" class="active" />
+          <img src="kayakwork2.png" />
+          <img src="kayakwork3.png" />
+          <img src="kayakwork4.png" />
+        </div>
+      </a>
+      <div class="work-info">
+        <span class="work-title">Kayak Slalom Toolkit</span>
+        <span class="work-medium" data-en="Print" data-zh="印刷">Print</span>
+        <span class="work-year">2025</span>
+      </div>
+    </div>
+
+
+
+  </div>
+</main>
+
+<div class="clock" id="clock">00:00:00</div>
+
+<script>
+  // Clock
+  function updateClock() {
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2, '0');
+    const m = String(now.getMinutes()).padStart(2, '0');
+    const s = String(now.getSeconds()).padStart(2, '0');
+    document.getElementById('clock').textContent = h + ':' + m + ':' + s;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // Slideshows
+  function runSlideshow(id, interval) {
+    const slides = document.querySelectorAll('#' + id + ' img');
+    if (!slides.length) return;
+    let current = 0;
+    setInterval(() => {
+      slides[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+    }, interval);
+  }
+  runSlideshow('taiwanSlideshow', 1800);
+  runSlideshow('prfSlideshow', 3600);
+  runSlideshow('kayakSlideshow', 1800);
+  runSlideshow('sneakersSlideshow', 3600);
+  runSlideshow('interviewSlideshow', 9000);
+
+  // Language toggle
+  const toggle = document.getElementById('langToggle');
+  let isZh = false;
+  toggle.addEventListener('click', () => {
+    isZh = !isZh;
+    toggle.textContent = isZh ? 'EN' : '中文';
+    document.querySelectorAll('[data-en]').forEach(el => {
+      el.innerHTML = isZh ? el.dataset.zh : el.dataset.en;
+    });
+  });
+</script>
+
+</body>
+</html>

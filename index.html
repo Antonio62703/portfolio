@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="portfav.svg" type="image/svg+xml">
+  <title>Antonio Chen</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    a, span, p { text-decoration: none; }
+    :root { --white: #ffffff; --black: #111111; --gray: #999999; --light-gray: #e8e8e8; }
+
+    html, body {
+      background: var(--white);
+      color: var(--black);
+      font-family: 'ABCMonumentGrotesk', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .site-name {
+      position: fixed;
+      top: 32px;
+      left: 32px;
+      z-index: 100;
+      font-size: 11pt;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      line-height: 1.2;
+      color: #111111;
+    }
+
+    .site-nav {
+      position: fixed;
+      top: 120px;
+      left: 32px;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .nav-link {
+      font-size: 11pt;
+      font-weight: 500;
+      color: #111111;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-thickness: 1px;
+      line-height: 1.2;
+      transition: opacity 0.2s ease;
+      display: block;
+    }
+    .nav-link:hover { opacity: 0.5; }
+
+    .hero { padding: 18px; }
+    .hero-image {
+      position: relative;
+      width: 100%;
+      height: calc(100vh - 72px);
+      overflow: hidden;
+      background: #ffffff;
+    }
+    .image-wrap {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: inline-block;
+    }
+
+    .image-wrap img {
+      display: block;
+      max-width: 60vw;
+      max-height: 75vh;
+      width: auto;
+      height: auto;
+    }
+
+    .photo-credit {
+      display: block;
+      margin-top: 6px;
+      font-size: 9pt;
+      font-weight: 300;
+      font-style: italic;
+      color: #111111;
+      text-align: left;
+      line-height: 1.2;
+    }
+
+    .hero-identity {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      max-width: 480px;
+    }
+
+    .bio {
+      font-size: 11pt;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      line-height: 1.2;
+      color: #111111;
+      text-indent: 96px;
+    }
+
+    .olympic-word {
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-thickness: 1px;
+      cursor: crosshair;
+      position: relative;
+      z-index: 1000;
+      padding: 8px 6px;
+      margin: -8px -6px;
+      transition: color 0.2s ease;
+      font-weight: 500;
+    }
+
+    #fence-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: #000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+    #fence-overlay.visible {
+      opacity: 1;
+    }
+    #fence-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ── WORKS SECTION ── */
+    .works-section {
+      background: var(--white);
+      padding: 80px 0 120px 380px;
+    }
+
+    .work-item {
+      display: flex;
+      align-items: flex-start;
+      padding: 0 0 100px 0;
+      position: relative;
+      gap: 40px;
+    }
+
+    .work-item__image {
+      flex-shrink: 0;
+      align-self: flex-start;
+    }
+
+    /* Left column: text left-aligned, image sits to its right */
+    .work-item__info {
+      width: 160px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      align-self: flex-start;
+      padding-top: 4px;
+    }
+
+    .work-item__info-meta {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+      width: 100%;
+    }
+
+    .work-title {
+      font-size: 11pt;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      line-height: 1.2;
+      color: #111111;
+      text-align: left;
+      display: block;
+      width: 100%;
+    }
+
+    .work-meta {
+      font-size: 11pt;
+      font-weight: 400;
+      color: #999999;
+      margin-top: 2px;
+      text-align: left;
+      line-height: 1.2;
+      display: block;
+    }
+
+    .work-medium {
+      font-size: 11pt;
+      font-weight: 400;
+      font-style: normal;
+      color: #999999;
+      margin-top: 2px;
+      text-align: left;
+      line-height: 1.2;
+      display: block;
+    }
+
+    .work-item__image a {
+      display: block;
+      text-decoration: none;
+    }
+
+    .work-thumb {
+      display: block;
+      height: 400px;
+      width: fit-content;
+      background: var(--light-gray);
+      overflow: visible;
+      transition: opacity 0.25s ease;
+      position: relative;
+    }
+
+    .work-thumb:hover {
+      opacity: 0.75;
+    }
+
+    .work-thumb video {
+      height: 100%;
+      width: auto;
+      display: block;
+    }
+
+    .work-thumb img {
+      height: 100%;
+      width: auto;
+      display: block;
+    }
+
+    /* slideshow */
+    .work-thumb.slideshow {
+      width: 560px;
+      background: transparent;
+    }
+    .work-thumb.slideshow img {
+      position: absolute;
+      top: 0; left: 0;
+      height: 100%;
+      width: auto;
+      opacity: 0;
+      transition: none;
+    }
+    .work-thumb.slideshow img.active {
+      opacity: 1;
+    }
+
+    #work1-thumb { height: 400px; }
+
+    .thumb-placeholder {
+      width: 560px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-style: italic;
+      font-size: 11pt;
+      color: var(--gray);
+    }
+    .lang-toggle {
+      position: fixed;
+      top: 32px;
+      right: 32px;
+      z-index: 200;
+      font-size: 11pt;
+      font-weight: 500;
+      color: #111111;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-thickness: 1px;
+      transition: opacity 0.2s ease;
+      background: none;
+      border: none;
+      font-family: 'ABCMonumentGrotesk', sans-serif;
+      letter-spacing: 0.01em;
+    }
+    .lang-toggle:hover { opacity: 0.5; }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 9pt;
+      font-weight: 300;
+      font-style: italic;
+      color: #111111;
+      white-space: nowrap;
+      line-height: 1.2;
+      transition: opacity 0.4s ease;
+    }
+    .scroll-hint.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+  </style>
+  <style>
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-Light-Trial.otf') format('opentype');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-LightItalic-Trial.otf') format('opentype');
+      font-weight: 400;
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-Bold-Trial.otf') format('opentype');
+      font-weight: 700;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-BoldItalic-Trial.otf') format('opentype');
+      font-weight: 700;
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-Thin-Trial.otf') format('opentype');
+      font-weight: 300;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-ThinItalic-Trial.otf') format('opentype');
+      font-weight: 300;
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-Medium-Trial.otf') format('opentype');
+      font-weight: 500;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-MediumItalic-Trial.otf') format('opentype');
+      font-weight: 500;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+<button class="lang-toggle" id="langToggle">中文</button>
+
+<div class="site-name">Antonio Chen</div>
+
+<nav class="site-nav">
+  <a href="index2.html" class="nav-link" data-en="Info↗" data-zh="關於↗">Info↗</a>
+  <a href="works.html"  class="nav-link" data-en="Works↗" data-zh="作品↗">Works↗</a>
+  <a href="archive.html" class="nav-link" data-en="Archive↗" data-zh="典藏↗">Archive↗</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-image">
+    <div class="image-wrap">
+      <img src="homeback.jpg" alt="" />
+      <span class="photo-credit">photo → Zhou Chuan</span>
+    </div>
+    <div class="hero-identity">
+      <p class="bio" data-en="is a Taiwanese graphic designer and <span class='olympic-word' id='olympicWord'>Olympic</span> fencer currently studying at the Rhode Island School of Design." data-zh="是一位台灣平面設計師暨<span class='olympic-word' id='olympicWord'>奧運</span>擊劍選手，目前就讀於羅德島設計學院（RISD）。">is a Taiwanese graphic designer and <span class="olympic-word" id="olympicWord">Olympic</span> fencer currently studying at the Rhode Island School of Design.</p>
+    </div>
+    <span class="scroll-hint" id="scrollHint">(Scroll down to see selected works)</span>
+  </div>
+</div>
+
+<div class="works-section">
+
+  <div class="work-item">
+    <div class="work-item__info">
+      <span class="work-title">Personalizing The Impersonal</span>
+      <div class="work-item__info-meta">
+        <span class="work-medium" data-en="Web, Installation, Publication" data-zh="網頁、裝置、出版">Web, Installation, Publication</span>
+        <span class="work-meta">2025</span>
+      </div>
+    </div>
+    <div class="work-item__image">
+      <a href="personal.html">
+        <div class="work-thumb" id="work1-thumb">
+          <video src="work1.mp4" autoplay muted loop playsinline></video>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="work-item">
+    <div class="work-item__info">
+      <span class="work-title">Know Thyself</span>
+      <div class="work-item__info-meta">
+        <span class="work-medium" data-en="Branding, Web" data-zh="品牌、網頁">Branding, Web</span>
+        <span class="work-meta">2025</span>
+      </div>
+    </div>
+    <div class="work-item__image">
+      <a href="kt.html">
+        <div class="work-thumb">
+          <video src="work2.mov" autoplay muted loop playsinline style="border: 0.5px solid #111111; display: block; height: 400px; width: auto;"></video>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="work-item">
+    <div class="work-item__info">
+      <span class="work-title">Winston Cuevas Interview</span>
+      <div class="work-item__info-meta">
+        <span class="work-medium" data-en="Print" data-zh="印刷">Print</span>
+        <span class="work-meta">2026</span>
+      </div>
+    </div>
+    <div class="work-item__image">
+      <a href="interview.html">
+        <div class="work-thumb slideshow" id="winstonSlideshow">
+          <img src="antc.jpg" class="active" />
+          <img src="ant2.png" />
+          <img src="ant5.png" />
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="work-item">
+    <div class="work-item__info">
+      <span class="work-title">KÀN</span>
+      <div class="work-item__info-meta">
+        <span class="work-medium" data-en="Print" data-zh="印刷">Print</span>
+        <span class="work-meta">2024</span>
+      </div>
+    </div>
+    <div class="work-item__image">
+      <a href="taiwan.html">
+        <div class="work-thumb slideshow" id="taiwanSlideshow">
+          <img src="taiwan1.jpg" class="active" />
+          <img src="taiwan2.png" />
+          <img src="taiwan3.png" />
+          <img src="taiwan4.png" />
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="work-item">
+    <div class="work-item__info">
+      <span class="work-title">Samsung Galaxy Z Fold6 Collaboration</span>
+      <div class="work-item__info-meta">
+        <span class="work-medium" data-en="Videography" data-zh="錄像">Videography</span>
+        <span class="work-meta">2024</span>
+      </div>
+    </div>
+    <div class="work-item__image">
+      <a href="samsung.html">
+        <div class="work-thumb">
+          <img src="samsung.png" alt="Samsung Galaxy Z Fold6 Collaboration" />
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="work-item">
+    <div class="work-item__info">
+      <span class="work-title">Sneaker Series</span>
+      <div class="work-item__info-meta">
+        <span class="work-medium" data-en="Multimedia" data-zh="多媒體">Multimedia</span>
+        <span class="work-meta">2023–2024</span>
+      </div>
+    </div>
+    <div class="work-item__image">
+      <a href="sneaker.html">
+        <div class="work-thumb slideshow" id="sneakersSlideshow">
+          <img src="sneakers.jpg" class="active" />
+          <img src="sneakers2.png" />
+          <img src="sneakers3.png" />
+          <img src="sneakers4.jpg" />
+        </div>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<div id="fence-overlay">
+  <video id="fence-video" src="antoniofence.mov" playsinline preload="auto" muted></video>
+</div>
+
+<script>
+  const olympicWord = document.getElementById('olympicWord');
+  const overlay     = document.getElementById('fence-overlay');
+  const video       = document.getElementById('fence-video');
+
+  olympicWord.addEventListener('mouseenter', () => {
+    overlay.classList.add('visible');
+    video.play();
+    olympicWord.style.color = '#ffffff';
+  });
+
+  olympicWord.addEventListener('mouseleave', () => {
+    overlay.classList.remove('visible');
+    video.pause();
+    olympicWord.style.color = '';
+  });
+</script>
+
+<script>
+  const scrollHint = document.getElementById('scrollHint');
+  let hintHidden = false;
+  window.addEventListener('scroll', () => {
+    if (!hintHidden && window.scrollY > 10) {
+      scrollHint.classList.add('hidden');
+      hintHidden = true;
+    }
+  }, { passive: true });
+</script>
+
+<style>
+  .clock {
+    position: fixed;
+    bottom: 24px;
+    right: 32px;
+    z-index: 100;
+    font-size: 10pt;
+    font-weight: 500;
+    color: #111111;
+    font-family: 'ABCMonumentGrotesk', sans-serif;
+  }
+</style>
+
+<div class="clock" id="clock">00:00:00</div>
+
+<script>
+  function updateClock() {
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2, '0');
+    const m = String(now.getMinutes()).padStart(2, '0');
+    const s = String(now.getSeconds()).padStart(2, '0');
+    document.getElementById('clock').textContent = h + ':' + m + ':' + s;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+</script>
+
+<script>
+  function runSlideshow(id, interval) {
+    const slides = document.querySelectorAll('#' + id + ' img');
+    if (!slides.length) return;
+    let current = 0;
+    setInterval(() => {
+      slides[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+    }, interval);
+  }
+  runSlideshow('taiwanSlideshow', 1800);
+  runSlideshow('winstonSlideshow', 3000);
+  runSlideshow('sneakersSlideshow', 1800);
+</script>
+
+<script>
+  // Language toggle
+  const toggle = document.getElementById('langToggle');
+  let isZh = false;
+
+  toggle.addEventListener('click', () => {
+    isZh = !isZh;
+    toggle.textContent = isZh ? 'EN' : '中文';
+
+    // Swap all elements with data-en / data-zh
+    document.querySelectorAll('[data-en]').forEach(el => {
+      el.innerHTML = isZh ? el.dataset.zh : el.dataset.en;
+    });
+
+    // Re-bind olympic word hover after bio innerHTML swap
+    const ow = document.getElementById('olympicWord');
+    if (ow) {
+      ow.addEventListener('mouseenter', () => {
+        overlay.classList.add('visible');
+        video.play();
+        ow.style.color = '#ffffff';
+      });
+      ow.addEventListener('mouseleave', () => {
+        overlay.classList.remove('visible');
+        video.pause();
+        ow.style.color = '';
+      });
+    }
+  });
+</script>
+
+</body>
+</html>

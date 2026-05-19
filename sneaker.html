@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="portfav.svg" type="image/svg+xml">
+  <title>Sneaker — Antonio Chen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    a, span, p { text-decoration: none; }
+    :root { --white: #ffffff; --black: #111111; --gray: #999999; --light-gray: #e8e8e8; }
+
+    html, body {
+      background: var(--white);
+      color: var(--black);
+      font-family: 'DM Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── SITE NAME ── */
+    .site-name {
+      position: fixed;
+      top: 32px;
+      left: 32px;
+      z-index: 100;
+      font-size: 11pt;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      line-height: 1.2;
+      color: var(--black);
+      text-decoration: none;
+    }
+
+    /* ── NAV ── */
+    .site-nav {
+      position: fixed;
+      top: 120px;
+      left: 32px;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .nav-link {
+      font-size: 11pt;
+      font-weight: 700;
+      color: var(--black);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-thickness: 1px;
+      line-height: 1.2;
+      transition: opacity 0.2s ease;
+      display: block;
+    }
+    .nav-link:hover { opacity: 0.5; }
+
+    /* ── LANG TOGGLE ── */
+    .lang-toggle {
+      position: fixed;
+      top: 32px;
+      right: 32px;
+      z-index: 200;
+      font-size: 11pt;
+      font-weight: 700;
+      color: var(--black);
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-thickness: 1px;
+      transition: opacity 0.2s ease;
+      background: none;
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+      letter-spacing: 0.01em;
+    }
+    .lang-toggle:hover { opacity: 0.5; }
+
+    /* ── CLOCK ── */
+    .clock {
+      position: fixed;
+      bottom: 24px;
+      right: 32px;
+      z-index: 100;
+      font-size: 10pt;
+      font-weight: 700;
+      color: var(--black);
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    /* ── PROJECT INFO — fixed sidebar ── */
+    .project-info {
+      position: fixed;
+      top: 260px;
+      left: 32px;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      max-width: 220px;
+    }
+    .project-info .work-title {
+      font-size: 11pt;
+      font-weight: 700;
+      color: var(--black);
+      line-height: 1.2;
+    }
+    .project-info .work-medium {
+      font-size: 11pt;
+      font-weight: 700;
+      color: var(--gray);
+      line-height: 1.2;
+    }
+    .project-info .work-year {
+      font-size: 11pt;
+      font-weight: 700;
+      color: var(--gray);
+      line-height: 1.2;
+    }
+
+    /* ── MAIN ── */
+    main {
+      padding-top: 100px;
+    }
+
+    /* ── WORK BLOCK ── */
+    .work-block {
+      margin-bottom: 0;
+    }
+
+    /* ── DESCRIPTION ROW ── */
+    .desc-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 80px;
+      padding: 80px 240px 48px 240px;
+    }
+
+    .desc-left {
+      flex: 0 0 160px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .desc-left .work-title {
+      font-size: 11pt;
+      font-weight: 700;
+      color: var(--black);
+      line-height: 1.2;
+    }
+
+    .desc-left .work-medium {
+      font-size: 11pt;
+      font-weight: 700;
+      color: var(--gray);
+      line-height: 1.2;
+    }
+
+    .desc-left .work-year {
+      font-size: 11pt;
+      font-weight: 700;
+      color: var(--gray);
+      line-height: 1.2;
+    }
+
+    .desc-right {
+      flex: 1;
+      font-size: 8.5pt;
+      font-weight: 700;
+      color: var(--gray);
+      line-height: 1.6;
+      max-width: 520px;
+    }
+
+    /* ── IMAGE GRID ── */
+    .img-grid {
+      padding: 0 240px 80px 240px;
+    }
+
+    .img-grid-inner {
+      display: grid;
+      gap: 16px;
+      width: 100%;
+      grid-template-columns: 1fr;
+    }
+
+    .img-grid-inner img {
+      width: 60%;
+      object-fit: cover;
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      width: calc(100% - 480px);
+      margin: 0 240px;
+      height: 1px;
+      background: var(--light-gray);
+    }
+
+
+  </style>
+</head>
+<body>
+
+<button class="lang-toggle" id="langToggle">中文</button>
+
+<a href="index.html" class="site-name">Antonio Chen</a>
+
+<nav class="site-nav">
+  <a href="index.html"   class="nav-link" data-en="Info↗"    data-zh="關於↗">Info↗</a>
+  <a href="works.html"   class="nav-link" data-en="Works↗"   data-zh="作品↗">Works↗</a>
+  <a href="archive.html" class="nav-link" data-en="Archive↗" data-zh="典藏↗">Archive↗</a>
+</nav>
+
+<div class="project-info">
+  <div class="work-title">Sneaker Series</div>
+  <div class="work-medium">Multi media</div>
+</div>
+
+<div class="clock" id="clock">00:00:00</div>
+
+<main>
+
+  <!-- ── ATLANTA — 6 images, 3 cols ── -->
+  <div class="work-block">
+    <div class="desc-row">
+      <div class="desc-left">
+        <div class="work-title">Reebok Club C 85: Atlanta 1996 Olympics</div>
+      </div>
+      <div class="desc-right">
+        Inspired by the 1996 Atlanta Olympics and Reebok's role as a sponsor, this design incorporates linear patterns drawn from track and field lane markings. The flowing lines create a sense of motion, speed, and rhythm, reflecting the energy of athletic performance while capturing a bold, 90s sports aesthetic.
+      </div>
+    </div>
+    <div class="img-grid">
+      <div class="img-grid-inner cols-3">
+        <img src="atlanta1.jpg" alt="Atlanta 1" />
+        <img src="atlanta2.jpg" alt="Atlanta 2" />
+        <img src="atlanta3.jpg" alt="Atlanta 3" />
+        <img src="atlanta4.jpg" alt="Atlanta 4" />
+        <img src="atlanta5.jpg" alt="Atlanta 5" />
+        <img src="atlanta6.jpg" alt="Atlanta 6" />
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── KANO — 7 images, 4 cols (4+3) ── -->
+  <div class="work-block">
+    <div class="desc-row">
+      <div class="desc-left">
+        <div class="work-title">Movie collection item inspired from KANO 嘉農棒球隊 (2014)</div>
+      </div>
+      <div class="desc-right">
+        When I was young this movie contributed to my passion as an athlete. The movie shows the journey of a small team in Chiayi climbing the ranks of high school baseball in the Japanese period. As underdogs they shocked fans nationwide as they continued to break records. I love how the movie described athletes as papaya fruits. Only at the brink of death are we able to surpass and produce sweet results.
+      </div>
+    </div>
+    <div class="img-grid">
+      <div class="img-grid-inner cols-auto">
+        <img src="kano1.jpg" alt="Kano 1" />
+        <img src="kano2.jpg" alt="Kano 2" />
+        <img src="kano3.jpg" alt="Kano 3" />
+        <img src="kano4.jpg" alt="Kano 4" />
+        <img src="kano5.jpg" alt="Kano 5" />
+        <img src="kano6.jpg" alt="Kano 6" />
+        <img src="kano7.jpg" alt="Kano 7" />
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── DENIM — 5 images, 3+2 ── -->
+  <div class="work-block">
+    <div class="desc-row">
+      <div class="desc-left">
+        <div class="work-title">Olympic Sport Fencing x Carhartt WIP Sacai LD Waffle</div>
+      </div>
+      <div class="desc-right">
+        Handmade sneaker using official Olympic fencing gear and denim.
+      </div>
+    </div>
+    <div class="img-grid">
+      <div class="img-grid-inner cols-3">
+        <img src="denim1.png" alt="Denim 1" />
+        <img src="denim2.png" alt="Denim 2" />
+        <img src="denim3.png" alt="Denim 3" />
+        <img src="denim4.png" alt="Denim 4" />
+        <img src="denim5.png" alt="Denim 5" />
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── FLOWER — 4 images, 4 cols ── -->
+  <div class="work-block">
+    <div class="desc-row">
+      <div class="desc-left">
+        <div class="work-title">Plumeria</div>
+      </div>
+      <div class="desc-right">
+        Nike x Stüssy collaboration inspired from plumeria flowers <a href="https://www.instagram.com/reel/C_H0ZW3pH2t/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" style="color: #0057ff; text-decoration: underline; text-underline-offset: 2px;">instagram.com/reel/C_H0ZW3pH2t</a>
+      </div>
+    </div>
+    <div class="img-grid">
+      <div class="img-grid-inner cols-4">
+        <img src="flower1.png" alt="Flower 1" />
+        <img src="flower2.png" alt="Flower 2" />
+        <img src="flower3.png" alt="Flower 3" />
+        <img src="flower4.png" alt="Flower 4" />
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  // Clock
+  function updateClock() {
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2, '0');
+    const m = String(now.getMinutes()).padStart(2, '0');
+    const s = String(now.getSeconds()).padStart(2, '0');
+    document.getElementById('clock').textContent = h + ':' + m + ':' + s;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // Language toggle
+  const toggle = document.getElementById('langToggle');
+  let isZh = false;
+  toggle.addEventListener('click', () => {
+    isZh = !isZh;
+    toggle.textContent = isZh ? 'EN' : '中文';
+    document.querySelectorAll('[data-en]').forEach(el => {
+      el.innerHTML = isZh ? el.dataset.zh : el.dataset.en;
+    });
+  });
+
+
+
+</script>
+
+</body>
+</html>

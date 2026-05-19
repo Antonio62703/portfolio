@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="portfav.svg" type="image/svg+xml">
+  <title>Antonio Chen — Info</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    a, span, p { text-decoration: none; }
+    :root { --white: #ffffff; --black: #111111; --gray: #999999; --light-gray: #e8e8e8; }
+
+    html, body {
+      background: var(--white);
+      color: var(--black);
+      font-family: 'ABCMonumentGrotesk', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .site-name {
+      position: fixed;
+      top: 32px;
+      left: 32px;
+      z-index: 100;
+      font-size: 11pt;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      line-height: 1.2;
+      color: var(--black);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-thickness: 1px;
+      transition: opacity 0.2s ease;
+    }
+    .site-name:hover { opacity: 0.5; }
+
+    .site-nav {
+      position: fixed;
+      top: 120px;
+      left: 32px;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .nav-link {
+      font-size: 11pt;
+      font-weight: 500;
+      color: var(--black);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-thickness: 1px;
+      line-height: 1.2;
+      transition: opacity 0.2s ease;
+      display: block;
+    }
+    .nav-link:hover { opacity: 0.5; }
+
+    .page {
+      padding: 32px 32px 80px 200px;
+    }
+
+    .content {
+      display: flex;
+      align-items: flex-start;
+      gap: 48px;
+      max-width: 900px;
+    }
+
+    .photo-wrap {
+      flex: 0 0 auto;
+      width: 240px;
+      align-self: flex-start;
+      position: relative;
+    }
+
+    .photo-img-box {
+      width: 100%;
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      background: var(--light-gray);
+    }
+
+    .photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    .photo-caption {
+      display: block;
+      margin-top: 6px;
+      font-size: 10pt;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--black);
+      text-align: left;
+    }
+
+    .info-text {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      text-align: left;
+    }
+
+    .info-text p {
+      font-size: 10pt;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--black);
+    }
+
+    .weather {
+      position: fixed;
+      bottom: 24px;
+      right: 32px;
+      z-index: 100;
+      font-size: 10pt;
+      font-weight: 400;
+      color: var(--black);
+      line-height: 1.4;
+      text-align: right;
+    }
+
+    .weather-location {
+      font-size: 9pt;
+      font-weight: 400;
+      color: var(--gray);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .weather-temp {
+      font-size: 10pt;
+      font-weight: 400;
+    }
+
+    .weather-condition {
+      font-size: 10pt;
+      font-weight: 300;
+      font-style: italic;
+    }
+  </style>
+  <style>
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-Light-Trial.otf') format('opentype');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-LightItalic-Trial.otf') format('opentype');
+      font-weight: 400;
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-Bold-Trial.otf') format('opentype');
+      font-weight: 700;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-BoldItalic-Trial.otf') format('opentype');
+      font-weight: 700;
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-Thin-Trial.otf') format('opentype');
+      font-weight: 300;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-ThinItalic-Trial.otf') format('opentype');
+      font-weight: 300;
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-Medium-Trial.otf') format('opentype');
+      font-weight: 500;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'ABCMonumentGrotesk';
+      src: url('ABCMonumentGrotesk-MediumItalic-Trial.otf') format('opentype');
+      font-weight: 500;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+<a href="index.html" class="site-name">Home↗</a>
+
+<nav class="site-nav">
+  <a href="index.html"   class="nav-link" data-en="Info↗"    data-zh="關於↗">Info↗</a>
+  <a href="works.html"   class="nav-link" data-en="Works↗"   data-zh="作品↗">Works↗</a>
+  <a href="archive.html" class="nav-link" data-en="Archive↗" data-zh="典藏↗">Archive↗</a>
+</nav>
+
+<div class="page">
+  <div class="content">
+
+    <div class="photo-wrap">
+      <div class="photo-img-box">
+        <img src="self.jpg" alt="Antonio Chen" />
+      </div>
+      <span class="photo-caption">Portrait — Lab 997</span>
+    </div>
+
+    <div class="info-text">
+      <p>Antonio Chen (b. 2000s, Taiwan) is a Taiwanese multidisciplinary designer and Olympic fencer. He is the first male Taiwanese foil fencer to qualify for the Olympics in 36 years, marking a historic return since 1988.</p>
+      <p>The inventive thrust of his work lies in negotiating precision and expression—merging the discipline of elite sport with a dynamic, highly structured visual language that moves between the personal and the universal.</p>
+      <p>Currently studying at the Rhode Island School of Design (RISD), Chen maintains his athletic career alongside his studies, traveling internationally for competitions on a near-monthly basis. His practice spans typography, identity systems, and digital environments, often capturing movement as a central visual language—translating the rhythm, speed, and flow of sport into forms that are minimal, tactile, and expressive.</p>
+      <p>His work and athletic career have been featured in Vogue, GQ, Marie Claire, Bella, TaiwanPlus, and Men's Uno, and he has been named to Dazed100.</p>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="weather" id="weather">
+  <span id="clock">00:00:00</span>
+</div>
+
+<script>
+  function updateClock() {
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2, '0');
+    const m = String(now.getMinutes()).padStart(2, '0');
+    const s = String(now.getSeconds()).padStart(2, '0');
+    document.getElementById('clock').textContent = h + ':' + m + ':' + s;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+</script>
+</body>
+</html>
